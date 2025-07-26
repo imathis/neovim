@@ -28,6 +28,15 @@ map("n", "<c-n>", "<Plug>(YankyNextEntry)", { desc = "Yanky Next" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save File" })
 map("n", "<leader>qq", "<cmd>q<CR>", { desc = "Close Buffer" })
 map("n", "<leader>Q", "<cmd>qa!<CR>", { desc = "Close All Buffers" })
+map(
+  "n",
+  "<leader>cc",
+  ":lua Snacks.picker.files({ cwd = vim.fn.stdpath('config') })<CR>",
+  { desc = "Open Config Files" }
+)
+-- Don't yank pasted-over text into the default register
+map("x", "p", '"_dP', { noremap = true, silent = true })
+map("x", "P", '"_dP', { noremap = true, silent = true })
 
 -- Visual mode keymap for quick substitution of selected text
 map("v", "R", function()
@@ -57,3 +66,45 @@ end, {
   desc = "Replace highlighted text",
   silent = true,
 })
+
+-- Toggle side-split terminal running zsh
+map({ "n", "t" }, "<C-\\>", function()
+  require("snacks.terminal").toggle("zsh", {
+    win = {
+      position = "right",
+      size = 0.4,
+      relative = "editor",
+    },
+  })
+end, { desc = "Toggle Right Terminal" })
+
+-- Toggle floating terminal running zsh with a no-op to distinguish it
+map({ "n", "t" }, "<C-f>", function()
+  require("snacks.terminal").toggle("zsh -c zsh", {
+    win = {
+      style = "float",
+      relative = "editor",
+      width = 0.8,
+      height = 0.8,
+      row = 0.1,
+      col = 0.1,
+      border = "rounded",
+    },
+  })
+end, { desc = "Toggle Floating Terminal" })
+
+-- -- Toggle floating terminal running fish
+-- vim.keymap.set("n", "<leader>tf", function()
+--   require("snacks.terminal").toggle({
+--     cmd = "zsh",
+--     win = {
+--       style = "float",
+--       relative = "editor",
+--       width = 0.8,
+--       height = 0.8,
+--       row = 0.1,
+--       col = 0.1,
+--       border = "rounded",
+--     },
+--   })
+-- end, { desc = "Toggle Floating Terminal" })
