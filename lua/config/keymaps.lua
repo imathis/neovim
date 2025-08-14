@@ -93,6 +93,7 @@ map({ "n", "t" }, "<C-f>", function()
   })
 end, { desc = "Toggle Floating Terminal" })
 
+
 -- -- Toggle floating terminal running fish
 -- vim.keymap.set("n", "<leader>tf", function()
 --   require("snacks.terminal").toggle({
